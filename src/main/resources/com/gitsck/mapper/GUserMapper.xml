@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gitsck.mapper.GUserMapper" >
+  <resultMap id="BaseResultMap" type="com.gitsck.pojo.GUser" >
+    <id column="u_id" property="uId" jdbcType="BIGINT" />
+    <result column="u_username" property="uUsername" jdbcType="VARCHAR" />
+    <result column="u_password" property="uPassword" jdbcType="VARCHAR" />
+    <result column="u_role" property="uRole" jdbcType="INTEGER" />
+    <result column="u_lastime" property="uLastime" jdbcType="VARCHAR" />
+    <result column="u_ip" property="uIp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    u_id, u_username, u_password, u_role, u_lastime, u_ip
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gitsck.pojo.GUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from g_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from g_user
+    where u_id = #{uId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from g_user
+    where u_id = #{uId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gitsck.pojo.GUserExample" >
+    delete from g_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gitsck.pojo.GUser" >
+    insert into g_user (u_id, u_username, u_password, 
+      u_role, u_lastime, u_ip
+      )
+    values (#{uId,jdbcType=BIGINT}, #{uUsername,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}, 
+      #{uRole,jdbcType=INTEGER}, #{uLastime,jdbcType=VARCHAR}, #{uIp,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gitsck.pojo.GUser" >
+    insert into g_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="uUsername != null" >
+        u_username,
+      </if>
+      <if test="uPassword != null" >
+        u_password,
+      </if>
+      <if test="uRole != null" >
+        u_role,
+      </if>
+      <if test="uLastime != null" >
+        u_lastime,
+      </if>
+      <if test="uIp != null" >
+        u_ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=BIGINT},
+      </if>
+      <if test="uUsername != null" >
+        #{uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uRole != null" >
+        #{uRole,jdbcType=INTEGER},
+      </if>
+      <if test="uLastime != null" >
+        #{uLastime,jdbcType=VARCHAR},
+      </if>
+      <if test="uIp != null" >
+        #{uIp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gitsck.pojo.GUserExample" resultType="java.lang.Integer" >
+    select count(*) from g_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update g_user
+    <set >
+      <if test="record.uId != null" >
+        u_id = #{record.uId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uUsername != null" >
+        u_username = #{record.uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPassword != null" >
+        u_password = #{record.uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uRole != null" >
+        u_role = #{record.uRole,jdbcType=INTEGER},
+      </if>
+      <if test="record.uLastime != null" >
+        u_lastime = #{record.uLastime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uIp != null" >
+        u_ip = #{record.uIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update g_user
+    set u_id = #{record.uId,jdbcType=BIGINT},
+      u_username = #{record.uUsername,jdbcType=VARCHAR},
+      u_password = #{record.uPassword,jdbcType=VARCHAR},
+      u_role = #{record.uRole,jdbcType=INTEGER},
+      u_lastime = #{record.uLastime,jdbcType=VARCHAR},
+      u_ip = #{record.uIp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gitsck.pojo.GUser" >
+    update g_user
+    <set >
+      <if test="uUsername != null" >
+        u_username = #{uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uRole != null" >
+        u_role = #{uRole,jdbcType=INTEGER},
+      </if>
+      <if test="uLastime != null" >
+        u_lastime = #{uLastime,jdbcType=VARCHAR},
+      </if>
+      <if test="uIp != null" >
+        u_ip = #{uIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gitsck.pojo.GUser" >
+    update g_user
+    set u_username = #{uUsername,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      u_role = #{uRole,jdbcType=INTEGER},
+      u_lastime = #{uLastime,jdbcType=VARCHAR},
+      u_ip = #{uIp,jdbcType=VARCHAR}
+    where u_id = #{uId,jdbcType=BIGINT}
+  </update>
+</mapper>

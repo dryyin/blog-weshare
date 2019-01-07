@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gitsck.mapper.GPvMapper" >
+  <resultMap id="BaseResultMap" type="com.gitsck.pojo.GPv" >
+    <id column="pv_id" property="pvId" jdbcType="BIGINT" />
+    <result column="pv_date" property="pvDate" jdbcType="VARCHAR" />
+    <result column="pv" property="pv" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pv_id, pv_date, pv
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gitsck.pojo.GPvExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from g_pv
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from g_pv
+    where pv_id = #{pvId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from g_pv
+    where pv_id = #{pvId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gitsck.pojo.GPvExample" >
+    delete from g_pv
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gitsck.pojo.GPv" >
+    insert into g_pv (pv_id, pv_date, pv
+      )
+    values (#{pvId,jdbcType=BIGINT}, #{pvDate,jdbcType=VARCHAR}, #{pv,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gitsck.pojo.GPv" >
+    insert into g_pv
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pvId != null" >
+        pv_id,
+      </if>
+      <if test="pvDate != null" >
+        pv_date,
+      </if>
+      <if test="pv != null" >
+        pv,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pvId != null" >
+        #{pvId,jdbcType=BIGINT},
+      </if>
+      <if test="pvDate != null" >
+        #{pvDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pv != null" >
+        #{pv,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gitsck.pojo.GPvExample" resultType="java.lang.Integer" >
+    select count(*) from g_pv
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update g_pv
+    <set >
+      <if test="record.pvId != null" >
+        pv_id = #{record.pvId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pvDate != null" >
+        pv_date = #{record.pvDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pv != null" >
+        pv = #{record.pv,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update g_pv
+    set pv_id = #{record.pvId,jdbcType=BIGINT},
+      pv_date = #{record.pvDate,jdbcType=VARCHAR},
+      pv = #{record.pv,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gitsck.pojo.GPv" >
+    update g_pv
+    <set >
+      <if test="pvDate != null" >
+        pv_date = #{pvDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pv != null" >
+        pv = #{pv,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pv_id = #{pvId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gitsck.pojo.GPv" >
+    update g_pv
+    set pv_date = #{pvDate,jdbcType=VARCHAR},
+      pv = #{pv,jdbcType=INTEGER}
+    where pv_id = #{pvId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gitsck.mapper.GArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.gitsck.pojo.GArticle" >
+    <id column="a_id" property="aId" jdbcType="BIGINT" />
+    <result column="a_title" property="aTitle" jdbcType="VARCHAR" />
+    <result column="a_view" property="aView" jdbcType="INTEGER" />
+    <result column="k_id" property="kId" jdbcType="BIGINT" />
+    <result column="a_cretime" property="aCretime" jdbcType="VARCHAR" />
+    <result column="a_extends" property="aExtends" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gitsck.pojo.GArticle" extends="BaseResultMap" >
+    <result column="a_text" property="aText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    a_id, a_title, a_view, k_id, a_cretime, a_extends
+  </sql>
+  <sql id="Blob_Column_List" >
+    a_text
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.gitsck.pojo.GArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from g_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gitsck.pojo.GArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from g_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from g_article
+    where a_id = #{aId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from g_article
+    where a_id = #{aId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gitsck.pojo.GArticleExample" >
+    delete from g_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gitsck.pojo.GArticle" >
+    insert into g_article (a_id, a_title, a_view, 
+      k_id, a_cretime, a_extends, 
+      a_text)
+    values (#{aId,jdbcType=BIGINT}, #{aTitle,jdbcType=VARCHAR}, #{aView,jdbcType=INTEGER}, 
+      #{kId,jdbcType=BIGINT}, #{aCretime,jdbcType=VARCHAR}, #{aExtends,jdbcType=VARCHAR}, 
+      #{aText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gitsck.pojo.GArticle" >
+    insert into g_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        a_id,
+      </if>
+      <if test="aTitle != null" >
+        a_title,
+      </if>
+      <if test="aView != null" >
+        a_view,
+      </if>
+      <if test="kId != null" >
+        k_id,
+      </if>
+      <if test="aCretime != null" >
+        a_cretime,
+      </if>
+      <if test="aExtends != null" >
+        a_extends,
+      </if>
+      <if test="aText != null" >
+        a_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        #{aId,jdbcType=BIGINT},
+      </if>
+      <if test="aTitle != null" >
+        #{aTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="aView != null" >
+        #{aView,jdbcType=INTEGER},
+      </if>
+      <if test="kId != null" >
+        #{kId,jdbcType=BIGINT},
+      </if>
+      <if test="aCretime != null" >
+        #{aCretime,jdbcType=VARCHAR},
+      </if>
+      <if test="aExtends != null" >
+        #{aExtends,jdbcType=VARCHAR},
+      </if>
+      <if test="aText != null" >
+        #{aText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gitsck.pojo.GArticleExample" resultType="java.lang.Integer" >
+    select count(*) from g_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update g_article
+    <set >
+      <if test="record.aId != null" >
+        a_id = #{record.aId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aTitle != null" >
+        a_title = #{record.aTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aView != null" >
+        a_view = #{record.aView,jdbcType=INTEGER},
+      </if>
+      <if test="record.kId != null" >
+        k_id = #{record.kId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aCretime != null" >
+        a_cretime = #{record.aCretime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aExtends != null" >
+        a_extends = #{record.aExtends,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aText != null" >
+        a_text = #{record.aText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update g_article
+    set a_id = #{record.aId,jdbcType=BIGINT},
+      a_title = #{record.aTitle,jdbcType=VARCHAR},
+      a_view = #{record.aView,jdbcType=INTEGER},
+      k_id = #{record.kId,jdbcType=BIGINT},
+      a_cretime = #{record.aCretime,jdbcType=VARCHAR},
+      a_extends = #{record.aExtends,jdbcType=VARCHAR},
+      a_text = #{record.aText,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update g_article
+    set a_id = #{record.aId,jdbcType=BIGINT},
+      a_title = #{record.aTitle,jdbcType=VARCHAR},
+      a_view = #{record.aView,jdbcType=INTEGER},
+      k_id = #{record.kId,jdbcType=BIGINT},
+      a_cretime = #{record.aCretime,jdbcType=VARCHAR},
+      a_extends = #{record.aExtends,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gitsck.pojo.GArticle" >
+    update g_article
+    <set >
+      <if test="aTitle != null" >
+        a_title = #{aTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="aView != null" >
+        a_view = #{aView,jdbcType=INTEGER},
+      </if>
+      <if test="kId != null" >
+        k_id = #{kId,jdbcType=BIGINT},
+      </if>
+      <if test="aCretime != null" >
+        a_cretime = #{aCretime,jdbcType=VARCHAR},
+      </if>
+      <if test="aExtends != null" >
+        a_extends = #{aExtends,jdbcType=VARCHAR},
+      </if>
+      <if test="aText != null" >
+        a_text = #{aText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gitsck.pojo.GArticle" >
+    update g_article
+    set a_title = #{aTitle,jdbcType=VARCHAR},
+      a_view = #{aView,jdbcType=INTEGER},
+      k_id = #{kId,jdbcType=BIGINT},
+      a_cretime = #{aCretime,jdbcType=VARCHAR},
+      a_extends = #{aExtends,jdbcType=VARCHAR},
+      a_text = #{aText,jdbcType=LONGVARCHAR}
+    where a_id = #{aId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gitsck.pojo.GArticle" >
+    update g_article
+    set a_title = #{aTitle,jdbcType=VARCHAR},
+      a_view = #{aView,jdbcType=INTEGER},
+      k_id = #{kId,jdbcType=BIGINT},
+      a_cretime = #{aCretime,jdbcType=VARCHAR},
+      a_extends = #{aExtends,jdbcType=VARCHAR}
+    where a_id = #{aId,jdbcType=BIGINT}
+  </update>
+</mapper>

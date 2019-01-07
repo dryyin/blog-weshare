@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>WeShare后台管理系统</title>
+	<!-- Bootstrap Styles-->
+	<link href="../css/bootstrap/bootstrap.css" rel="stylesheet" />
+	<!-- FontAwesome Styles-->
+	<link href="../assets/css/font-awesome.css" rel="stylesheet" />
+	<!-- Morris Chart Styles-->
+	<link href="../css/morris/morris-0.4.3.min.css" rel="stylesheet" />
+	<!-- Custom Styles-->
+	<link href="../css/bootstrap/custom-styles.css" rel="stylesheet" />
+	<!-- Google Fonts-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans'
+		  rel='stylesheet' type='text/css' />
+	<!-- Toastr-->
+	<link rel="stylesheet" href="../css/toastr/toastr.css">
+	<!-- fakeloader css -->
+	<link href="../fakeloader/fakeloader.css" rel="stylesheet">
+	<link rel="shortcut icon" type="text/css" href="../css/images/circle.png" />
+	<!-- jQuery Js -->
+	<script src="../js/jquery/jquery.3.2.1.min.js"></script>
+	<script src="../fakeloader/fakeloader.min.js"></script>
+
+</head>
+
+<body ng-app="gitsck" ng-controller="countController" ng-init="isLogin()">
+<div class="fakeloader"></div>
+<script>
+    $(".fakeloader").fakeLoader({
+        timeToHide:400,
+        bgColor:"#fff",
+        spinner:"spinner3"
+    });
+</script>
+<div id="wrapper">
+	<nav class="navbar navbar-default top-navbar" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><i
+					class="fa fa-bitbucket"></i> <strong>WeShare后台管理</strong></a>
+		</div>
+
+		<ul class="nav navbar-top-links navbar-right">
+
+
+			<!-- /.dropdown -->
+
+			<li class="dropdown"><a class="dropdown-toggle"
+									data-toggle="dropdown" href="#" aria-expanded="false"> <i
+					class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+			</a>
+				<ul class="dropdown-menu dropdown-user">
+					<li><a href="#"><i class="fa fa-user fa-fw"></i>当前在线：{{nuser.uUsername}}</a></li>
+					<li class="divider"></li>
+					<li><a href="" ><i class="fa fa-sign-out fa-fw"></i>注销</a></li>
+				</ul> <!-- /.dropdown-user --></li>
+			<!-- /.dropdown -->
+		</ul>
+	</nav>
+	<!--/. NAV TOP  -->
+	<nav class="navbar-default navbar-side" role="navigation">
+		<div id="sideNav" href="">
+			<i class="fa fa-caret-right"></i>
+		</div>
+		<div class="sidebar-collapse">
+			<ul class="nav" id="main-menu" style="background-color: #333;">
+				<li><a class="active-menu" href="/c"><i class="fa fa-sitemap"></i>知识库统计</a>
+				</li>
+				<li><a  href="/k" ><i class="fa fa-key"></i>分类管理</a>
+				</li>
+				<li><a href="/u" ><i class="fa fa-user"></i>用户管理</a>
+				</li>
+				<li><a  href="/a"><i class="fa fa-desktop"></i>文章统计</a>
+				</li>
+			</ul>
+		</div>
+
+	</nav>
+	<!-- /. NAV SIDE  -->
+	<div id="page-wrapper">
+		<div id="page-inner">
+
+			<div class="page-header">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="page-header">
+							<small>知识库概况</small>
+						</h1>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-heading">
+				<div class="panel-heading">
+					<p class="panel-subtitle" id="mytime"></p>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-9">
+							<div id="firCharts" ></div>
+						</div>
+						<div class="col-md-3" ng-init="getBaseParam()">
+							<div class="weekly-summary text-right">
+								<span class="info-label">PV总计</span>
+								<span class="number" ng-bind="baseParam.totalPV"></span>
+							</div>
+							<div class="weekly-summary text-right">
+								<span class="info-label">文章总数达</span>
+								<span class="number" ng-bind="baseParam.totalArticles"></span>
+							</div>
+							<div class="weekly-summary text-right">
+								<span class="info-label">用户总数达</span>
+								<span class="number" ng-bind="baseParam.totalUser"></span>
+							</div>
+							<div class="weekly-summary text-right">
+								<span class="info-label">子分类达</span>
+								<span class="number" ng-bind="baseParam.totalKinds"></span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div id="pieCharts"></div>
+						</div>
+						<div class="col-md-6">
+							<div id="yearCharts"></div>
+						</div>
+					</div>
+				</div>
+
+			<footer>
+				<p>
+					 <a href="#" target="_blank" title="#">@Weshare Guolin & Yuhong</a>
+				</p>
+			</footer>
+		</div>
+	</div>
+	<!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+
+<!-- JS Scripts-->
+<!-- Bootstrap Js -->
+<script src="../js/bootstrap/bootstrap.min.js"></script>
+
+<!-- Metis Menu Js -->
+<script src="../js/jquery/jquery.metisMenu.js"></script>
+
+<!-- Custom Js -->
+<script src="../js/bootstrap/custom-scripts.js"></script>
+
+<!-- Angular js -->
+<script type="text/javascript" src="../js/angularjs/plugs/angular.min.js"></script>
+
+<script type="text/javascript" src="../js/angularjs/base.js"></script>
+
+<script type="text/javascript" src="../js/angularjs/service/loginService.js"></script>
+<script type="text/javascript" src="../js/angularjs/service/countService.js"></script>
+<script type="text/javascript" src="../js/angularjs/controller/countController.js"></script>
+
+<script type="text/javascript" src="../js/angularjs/time.js"></script>
+
+<!-- HightCharts JS -->
+<script src="../js/highcharts/highcharts.js"></script>
+
+<!-- Toastr.js -->
+<script src="../js/toastr/toastr.js"></script>
+
+
+
+</body>
+
+</html>

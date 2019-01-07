@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WeShare智能客服</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="../tulin/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="../tulin/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="text/css" href="../css/images/circle.png" />
+    <script src="../tulin/js/jquery-1.9.1.min.js"></script>
+    <script src="../tulin/js/bootstrap.min.js"></script>
+    
+    <!-- Angular js -->
+    <script type="text/javascript" src="../js/angularjs/plugs/angular.min.js"></script>
+    
+    <script type="text/javascript" src="../js/angularjs/base.js"></script>
+    
+    <script type="text/javascript" src="../js/angularjs/service/contactService.js"></script>
+    <script type="text/javascript" src="../js/angularjs/controller/contactController.js"></script>
+</head>
+
+<body ng-app="gitsck" ng-controller="contactController">
+    <div id="convo" data-from="Sonu Joshi">
+    <a href="../../static" style="color: green"> 回 官 网</a>
+        <ul class="chat-thread">
+        <li class="left">WeShare博文中心！</li>
+        <li class="left">我在呢！</li>
+        </ul>
+        <div class="formstyle">
+            <form class="bs-example bs-example-form" role="form">
+                <div class="input-group input-group-lg">
+                    <input type="text" ng-model="message" id="input_text"  class="form-control" placeholder="点击输入">
+                    <span id="button"  ng-click="sendMessage()" class="input-group-addon">发送</span>
+                </div>
+                <br>
+                <input type="text" style="display:none;">
+            </form>
+        </div>
+    </div>
+    <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+    </div>
+</body>
+
+</html>
+<script>
+$('#button').click(function() {
+    var form_val = $('.form-control').val();
+    $('.chat-thread').append('<li class="right">' + form_val + '</li>');
+    $('.form-control').val('');
+
+    $.post("./api.php", { info: form_val }, function(data) {
+        $('.chat-thread').append('<li class="left">' + data + '</li>');
+        $('.chat-thread').scrollTop($('.chat-thread')[0].scrollHeight);
+    });
+
+    $('.chat-thread').scrollTop($('.chat-thread')[0].scrollHeight);
+});
+
+var height = $(window).height() * 0.8;
+$('.chat-thread').css('height', height);
+</script>

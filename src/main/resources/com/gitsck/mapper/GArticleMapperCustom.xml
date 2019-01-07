@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gitsck.mapper.GArticleMapperCustom" >
+
+  <select id="findList" parameterType="com.gitsck.pojo.GArticle" resultType="com.gitsck.pojo.GArticleCustom">
+      SELECT
+          gua.a_id aId,
+          ga.a_title aTitle,
+          ga.a_view aView,
+          ga.k_id kId,
+          ga.a_cretime aCretime,
+          gu.u_username authorName
+      FROM
+          g_user_article gua,
+          g_article ga,
+          g_user gu
+      WHERE
+          gua.a_id = ga.a_id
+      AND
+          gua.u_i = gu.u_id
+
+      <if test="kId != null and kId != ''">
+          AND
+          ga.k_id = ${kId}
+      </if>
+
+      <if test="aTitle != null and aTitle != ''">
+          AND
+          ga.a_title like '%${aTitle}%'
+      </if>
+
+      order by
+        ga.a_cretime
+      desc
+  </select>
+</mapper>

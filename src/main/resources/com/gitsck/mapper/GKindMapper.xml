@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gitsck.mapper.GKindMapper" >
+  <resultMap id="BaseResultMap" type="com.gitsck.pojo.GKind" >
+    <id column="k_id" property="kId" jdbcType="BIGINT" />
+    <result column="k_parent" property="kParent" jdbcType="BIGINT" />
+    <result column="k_isparent" property="kIsparent" jdbcType="INTEGER" />
+    <result column="k_text" property="kText" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    k_id, k_parent, k_isparent, k_text
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gitsck.pojo.GKindExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from g_kind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from g_kind
+    where k_id = #{kId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from g_kind
+    where k_id = #{kId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gitsck.pojo.GKindExample" >
+    delete from g_kind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gitsck.pojo.GKind" >
+    insert into g_kind (k_id, k_parent, k_isparent, 
+      k_text)
+    values (#{kId,jdbcType=BIGINT}, #{kParent,jdbcType=BIGINT}, #{kIsparent,jdbcType=INTEGER}, 
+      #{kText,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gitsck.pojo.GKind" >
+    insert into g_kind
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="kId != null" >
+        k_id,
+      </if>
+      <if test="kParent != null" >
+        k_parent,
+      </if>
+      <if test="kIsparent != null" >
+        k_isparent,
+      </if>
+      <if test="kText != null" >
+        k_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="kId != null" >
+        #{kId,jdbcType=BIGINT},
+      </if>
+      <if test="kParent != null" >
+        #{kParent,jdbcType=BIGINT},
+      </if>
+      <if test="kIsparent != null" >
+        #{kIsparent,jdbcType=INTEGER},
+      </if>
+      <if test="kText != null" >
+        #{kText,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gitsck.pojo.GKindExample" resultType="java.lang.Integer" >
+    select count(*) from g_kind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update g_kind
+    <set >
+      <if test="record.kId != null" >
+        k_id = #{record.kId,jdbcType=BIGINT},
+      </if>
+      <if test="record.kParent != null" >
+        k_parent = #{record.kParent,jdbcType=BIGINT},
+      </if>
+      <if test="record.kIsparent != null" >
+        k_isparent = #{record.kIsparent,jdbcType=INTEGER},
+      </if>
+      <if test="record.kText != null" >
+        k_text = #{record.kText,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update g_kind
+    set k_id = #{record.kId,jdbcType=BIGINT},
+      k_parent = #{record.kParent,jdbcType=BIGINT},
+      k_isparent = #{record.kIsparent,jdbcType=INTEGER},
+      k_text = #{record.kText,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gitsck.pojo.GKind" >
+    update g_kind
+    <set >
+      <if test="kParent != null" >
+        k_parent = #{kParent,jdbcType=BIGINT},
+      </if>
+      <if test="kIsparent != null" >
+        k_isparent = #{kIsparent,jdbcType=INTEGER},
+      </if>
+      <if test="kText != null" >
+        k_text = #{kText,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where k_id = #{kId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gitsck.pojo.GKind" >
+    update g_kind
+    set k_parent = #{kParent,jdbcType=BIGINT},
+      k_isparent = #{kIsparent,jdbcType=INTEGER},
+      k_text = #{kText,jdbcType=VARCHAR}
+    where k_id = #{kId,jdbcType=BIGINT}
+  </update>
+</mapper>

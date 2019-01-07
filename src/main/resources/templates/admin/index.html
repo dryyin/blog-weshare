@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>guolin bolog</title>
+<link rel="stylesheet" type="text/css" href="../basta/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="../basta/css/demo.css" />
+<link rel="shortcut icon" type="text/css" href="../css/images/circle.png" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="../basta/css/component.css" />
+<!--[if IE]>
+<script src="../basta/js/html5.js"></script>
+<![endif]-->
+</head>
+<body ng-app="gitsck" ng-controller="loginController" ng-init="user={}">
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="logo_box">
+						<h3>Welcome WeShare Back-Stage Management</h3>
+						<form action="#" name="f" method="post">
+							<div class="input_outer">
+								<span class="u_user"></span>
+								<input name="logname" class="text" style="color: #FFFFFF !important" ng-model="user.uUsername" type="text" placeholder="请输入账户">
+							</div>
+							<div class="input_outer">
+								<span class="us_uer"></span>
+								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;" ng-model="user.uPassword" type="password" placeholder="请输入密码">
+							</div>
+							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF" ng-click="login()">登录</a></div>
+							<!--<div class="mb2"><a href="./qq/login"><img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_1.png"/>QQ</a></div>-->
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+		<script src="../basta/js/TweenLite.min.js"></script>
+		<script src="../basta/js/EasePack.min.js"></script>
+		<script src="../basta/js/rAF.js"></script>
+		<script src="../basta/js/demo-1.js"></script>
+		<!-- Angular js -->
+		<script type="text/javascript" src="../js/angularjs/plugs/angular.min.js"></script>
+
+		<script type="text/javascript" src="../js/angularjs/base.js"></script>
+
+		<script type="text/javascript" src="../js/angularjs/service/loginService.js"></script>
+		<script type="text/javascript" src="../js/angularjs/controller/loginController.js"></script>
+
+
+
+
+		<!-- Toastr.js -->
+		<script src="../js/toastr/toastr.js"></script>
+		<div style="text-align:center;">
+</div>
+	</body>
+</html>

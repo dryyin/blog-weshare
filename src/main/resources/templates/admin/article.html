@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WeShare后台管理系统</title>
+<!-- Bootstrap Styles-->
+<link href="../css/bootstrap/bootstrap.css" rel="stylesheet" />
+<!-- FontAwesome Styles-->
+<link href="../assets/css/font-awesome.css" rel="stylesheet" />
+<!-- Morris Chart Styles-->
+<link href="../css/morris/morris-0.4.3.min.css" rel="stylesheet" />
+<!-- Custom Styles-->
+<link href="../css/bootstrap/custom-styles.css" rel="stylesheet" />
+<!-- Google Fonts-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans'
+	rel='stylesheet' type='text/css' />
+<!-- Toastr-->
+<link rel="stylesheet" href="../css/toastr/toastr.css">
+<!-- fakeloader css -->
+<link href="../fakeloader/fakeloader.css" rel="stylesheet">
+	<link rel="shortcut icon" type="text/css" href="../css/images/circle.png" />
+<!-- jQuery Js -->
+<script src="../js/jquery/jquery.3.2.1.min.js"></script>
+<script src="../fakeloader/fakeloader.min.js"></script>
+
+</head>
+
+<body ng-app="gitsck" ng-controller="artController" ng-init="isLogin()">
+	<div class="fakeloader"></div>
+	<script>
+		$(".fakeloader").fakeLoader({
+			timeToHide:400,
+			bgColor:"#fff",
+			spinner:"spinner3"
+		});
+	</script>
+	<div id="wrapper">
+		<nav class="navbar navbar-default top-navbar" role="navigation">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><i
+					class="fa fa-bitbucket"></i> <strong>WeShare后台管理</strong></a>
+			</div>
+
+			<ul class="nav navbar-top-links navbar-right">
+
+				<!-- /.dropdown -->
+
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" aria-expanded="false"> <i
+						class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+				</a>
+					<ul class="dropdown-menu dropdown-user">
+						<li><a href="#"><i class="fa fa-user fa-fw"></i>当前在线：{{nuser.uUsername}}</a></li>
+						<li class="divider"></li>
+						<li><a href="" ><i class="fa fa-sign-out fa-fw"></i>注销</a></li>
+					</ul> <!-- /.dropdown-user --></li>
+				<!-- /.dropdown -->
+			</ul>
+		</nav>
+		<!--/. NAV TOP  -->
+		<nav class="navbar-default navbar-side" role="navigation">
+			<div id="sideNav" href="">
+				<i class="fa fa-caret-right"></i>
+			</div>
+			<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu" style="background-color: #333;">
+					<li><a href="/c"><i class="fa fa-sitemap"></i>知识库统计</a>
+					</li>
+					<li><a  href="/k" ><i class="fa fa-key"></i>分类管理</a>
+					</li>
+					<li><a href="/u" ><i class="fa fa-user"></i>用户管理</a>
+					</li>
+					<li><a class="active-menu" href="/a"><i class="fa fa-desktop"></i>文章统计</a>
+					</li>
+				</ul>
+			</div>
+
+		</nav>
+		<!-- /. NAV SIDE  -->
+		<div id="page-wrapper">
+			<div id="page-inner">
+
+				<div class="page-header">
+					<div class="row">
+						<div class="col-md-6">
+							<h1 class="page-header">
+								<small>文章管理</small>
+							</h1>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-success">
+					<div class="panel-body table-responsive">
+						<table id="dataList" class="table table-hover">
+							<thead>
+							<tr>
+								<th class="sorting_asc">文章标题</th>
+								<th class="sorting">作者</th>
+								<th class="sorting">浏览次数</th>
+								<th class="sorting">种类</th>
+								<th class="sorting">发表时间</th>
+								<th class="sorting">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="entity in list">
+								<td ng-bind="entity.aTitle"></td>
+								<td ng-bind="entity.authorName"></td>
+								<td ng-bind="entity.aView"></td>
+								<td ng-bind="entity.kindText"></td>
+								<td ng-bind="entity.aCretime"></td>
+								<td>
+									<button class="btn btn-default" ng-click="del(entity.aId)">删除</button>
+									<button class="btn btn-default" data-toggle="modal" data-target="#myModal" ng-click="findone(entity.aId)">查看内容</button>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						<!--数据列表/-->
+						<!-- 分页 -->
+						<tm-pagination conf="paginationConf"></tm-pagination>
+					</div>
+				</div>
+
+				<footer>
+					<p>
+						 <a href="#" target="_blank" title="#"><a href="#" target="_blank" title="#">@Weshare Guolin & Yuhong</a></a>
+					</p>
+				</footer>
+			</div>
+		</div>
+		<!-- /. PAGE WRAPPER  -->
+	</div>
+	<!-- /. WRAPPER  -->
+
+	<!-- Model  -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">文章内容</h4>
+				</div>
+				<div class="modal-body" id="articleBody">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- JS Scripts-->
+	<!-- Bootstrap Js -->
+	<script src="../js/bootstrap/bootstrap.min.js"></script>
+
+	<!-- Metis Menu Js -->
+	<script src="../js/jquery/jquery.metisMenu.js"></script>
+
+	<!-- Custom Js -->
+	<script src="../js/bootstrap/custom-scripts.js"></script>
+	
+	<!-- Angular js -->
+    <script type="text/javascript" src="../js/angularjs/plugs/angular.min.js"></script>
+    
+    <script type="text/javascript" src="../js/angularjs/base_pagination.js"></script>
+
+	<script type="text/javascript" src="../js/angularjs/service/loginService.js"></script>
+    <script type="text/javascript" src="../js/angularjs/service/artService.js"></script>
+    <script type="text/javascript" src="../js/angularjs/controller/artController.js"></script>
+	
+	<!-- 分页组件开始 -->
+	<script src="../js/angularjs/plugs/pagination.js"></script>
+	<link rel="stylesheet" href="../js/angularjs/plugs/pagination.css">
+	
+	<!-- Toastr.js -->
+	<script src="../js/toastr/toastr.js"></script>
+
+
+
+</body>
+
+</html>
